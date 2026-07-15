@@ -1,0 +1,779 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Explore Sri Lanka - Home</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+  <!-- ══════════════════════════════════════
+         NAVBAR
+    ══════════════════════════════════════ -->
+  <header>
+    <nav class="navbar" id="navbar">
+      <div class="logo-container">
+        <img src="images/lion.png" alt="Logo" class="logo-img">
+        <h2>Explore Sri Lanka</h2>
+      </div>
+      <ul class="menu">
+        <li><a href="#" onclick="loadPage('home')" data-page="home" class="nav-link active">Home</a></li>
+        <li><a href="#" onclick="loadPage('destinations')" data-page="destinations" class="nav-link">Destinations</a> </li>
+        <li><a href="#" onclick="loadPage('traveltips')" data-page="traveltips" class="nav-link">Cultural  Events</a></li>
+        <li><a href="#" onclick="loadPage('gallery')" data-page="gallery" class="nav-link">Gallery</a></li>
+        <li><a href="#" onclick="loadPage('map')" data-page="map" class="nav-link">Map</a></li>
+        <li><a href="#" onclick="loadPage('ourstory')" data-page="ourstory" class="nav-link">Our Story</a></li>
+        <li><a href="#" onclick="loadPage('contact')" data-page="contact" class="nav-link">Contact</a></li>
+      </ul>
+      <div class="nav-auth-btns" id="nav-auth-btns">
+        <div id="auth-out" style="display:flex; gap:10px; align-items:center;">
+          <button class="btn-login" onclick="window.location.href='pages/login&signup.html'">Log In</button>
+          <button class="btn-signup" onclick="window.location.href='pages/login&signup.html'">Sign Up</button>
+        </div>
+        <div id="auth-in" style="display:none; gap:10px; align-items:center;">
+          <span class="nav-user-name" id="nav-user-name"></span>
+          <button class="btn-logout" onclick="logoutUser()">Log Out</button>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main-content">
+
+    <!-- ─── PAGE: HOME ─── -->
+    <div id="page-home" class="page active">
+
+      <!-- HERO -->
+      <section class="hero" id="home">
+        <h3>DISCOVER THE PEARL OF THE INDIAN OCEAN</h3>
+        <h1 class="hero-title">
+          <span class="white">Explore</span>
+          <span class="gold">Sri Lanka</span>
+        </h1>
+        <p>Ancient Temples, Pristine Beaches, Lush Mountains &amp; Vibrant Culture - Your Unforgettable journey
+          starts here.</p>
+        <div class="buttons">
+          <button onclick="loadPage('destinations')">Explore Destinations</button>
+          <button id="bookHotelsBtn">Book Hotels</button>
+        </div>
+      </section>
+
+      <!-- SEARCH -->
+      <section class="search-section">
+        <input type="text" id="searchInput" placeholder="Search destinations...">
+        <button onclick="searchDestination()">Search</button>
+      </section>
+      <div id="php-results">
+        <h4>🔍 Search Results from Server:</h4>
+        <div id="php-result-content"></div>
+      </div>
+
+      <!-- MAP & INFO -->
+      <section class="sri-lanka-info">
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d395879.9132757409!2d79.79989522364217!3d7.873053582235165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25e2f0b6d81b3%3A0x3a1778247194aa9e!2sSri%20Lanka!5e0!3m2!1sen!2slk!4v1698400000000!5m2!1sen!2slk"
+            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+        <div class="sri-lanka-text">
+          <h2>Discover the Jewel of the Indian Ocean</h2>
+          <p>Sri Lanka, the Pearl of the Indian Ocean, is a land of endless wonders. From pristine golden
+            beaches and lush tea-covered hills to ancient temples, majestic wildlife, and vibrant festivals,
+            every corner tells a story.</p>
+        </div>
+      </section>
+
+
+      <!-- HOTELS SECTION -->
+      <section class="hotels-section" id="hotels-section">
+
+        <div class="hotels-header">
+          <h2>Find Hotels</h2>
+          <p>Search hotels by destination across Sri Lanka</p>
+        </div>
+
+        <!-- HOTEL LOCATION FILTER BAR -->
+        <div class="hotel-search-bar">
+          <div class="hotel-search-input-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="hotelSearchInput" placeholder="Search by location (e.g. Ella, Galle, Kandy...)"
+              oninput="filterHotels()" autocomplete="off">
+            <button class="hotel-search-clear" id="hotelClearBtn" onclick="clearHotelSearch()" title="Clear">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <!-- LOCATION PILLS -->
+          <div class="hotel-location-pills">
+            <button class="pill active" data-loc="all" onclick="setPillFilter(this,'all')">All</button>
+            <button class="pill" data-loc="sigiriya" onclick="setPillFilter(this,'sigiriya')">🏔
+              Sigiriya</button>
+            <button class="pill" data-loc="ella" onclick="setPillFilter(this,'ella')">🌿 Ella</button>
+            <button class="pill" data-loc="mirissa" onclick="setPillFilter(this,'mirissa')">🌊
+              Mirissa</button>
+            <button class="pill" data-loc="kandy" onclick="setPillFilter(this,'kandy')">🏛 Kandy</button>
+            <button class="pill" data-loc="galle" onclick="setPillFilter(this,'galle')">🏰 Galle</button>
+            <button class="pill" data-loc="yala" onclick="setPillFilter(this,'yala')">🐆 Yala</button>
+          </div>
+        </div>
+
+        <!-- RESULTS COUNT -->
+        <div class="hotel-results-meta">
+          <span id="hotelResultCount">Showing all hotels</span>
+        </div>
+
+        <!-- HOTEL CARDS GRID -->
+        <div class="hotel-grid" id="hotelGrid">
+        </div><!-- /hotel-grid -->
+
+        <!-- NO RESULTS MESSAGE -->
+        <div class="hotel-no-results" id="hotelNoResults" style="display:none;">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <h3>No hotels found</h3>
+          <p>Try searching for Sigiriya, Ella, Mirissa, Kandy, Galle or Yala</p>
+          <button onclick="clearHotelSearch()">Show All Hotels</button>
+        </div>
+
+        <!-- BOOKING CONFIRMATION MODAL -->
+        <div class="hotel-modal-overlay" id="hotelModal" onclick="closeHotelModal(event)">
+          <div class="hotel-modal">
+            <button class="modal-close-btn" onclick="closeHotelModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="modal-icon"><i class="fa-solid fa-calendar-check"></i></div>
+            <h3 id="modalHotelName">Hotel Name</h3>
+            <p>Your booking request has been received! Our team will contact you shortly to confirm your
+              reservation.</p>
+            <div class="modal-details">
+              <div><i class="fa-solid fa-envelope"></i> Confirmation sent to your email</div>
+              <div><i class="fa-solid fa-phone"></i> We'll call within 24 hours</div>
+            </div>
+            <button class="modal-ok-btn" onclick="closeHotelModal()">Got it!</button>
+          </div>
+        </div>
+
+      </section>
+      <!-- /hotels-section -->
+
+      <!-- WHY VISIT -->
+      <section class="features">
+        <h2>Why Visit Sri Lanka</h2>
+        <div class="feature-container">
+          <div class="feature"><i class="fa-solid fa-umbrella-beach"></i>
+            <h3>Beautiful Beaches</h3>
+          </div>
+          <div class="feature"><i class="fa-solid fa-mountain"></i>
+            <h3>Scenic Mountains</h3>
+          </div>
+          <div class="feature"><i class="fa-solid fa-paw"></i>
+            <h3>Wildlife Safari</h3>
+          </div>
+          <div class="feature"><i class="fa-solid fa-landmark"></i>
+            <h3>Ancient Culture</h3>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /page-home -->
+
+
+    <!-- ─── PAGE: DESTINATIONS ─── -->
+    <div id="page-destinations" class="page">
+      <div class="page-header-banner destinations-banner">
+        <h1>Explore Destinations</h1>
+        <p>Discover the most breathtaking places Sri Lanka has to offer</p>
+      </div>
+      <!-- DESTINATION PREVIEW CARDS -->
+      <section class="destinations">
+        <h2>Popular Destinations</h2>
+        <div class="destination-grid" id="homeDestGrid">
+          <!-- DB-driven cards — loaded by loadHomeDestinations() in script.js -->
+          <div class="card" style="opacity:0.4;pointer-events:none">
+            <img src="images/maligawa.jpg" alt="Loading...">
+            <h3><i class="fa-solid fa-spinner fa-spin"></i> Loading...</h3>
+            <p>Fetching destinations from database...</p>
+          </div>
+        </div>
+      </section>
+      <!-- ── DESTINATIONS DB SECTION ── -->
+      <section class="dest-db-section">
+        <!-- Search + Filter Bar -->
+        <div class="dest-controls">
+          <div class="dest-search-wrap">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="destSearchInput" placeholder="Search destinations, locations..."
+              oninput="filterDestPage()" autocomplete="off" />
+            <button class="dest-clear-btn" id="destClearBtn" onclick="clearDestSearch()" title="Clear">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+          <div class="dest-cat-pills" id="destCatPills">
+            <button class="dest-pill active" data-cat="all" onclick="setDestCat(this, 'all')">
+              🗺 All
+            </button>
+            <button class="dest-pill" data-cat="nature" onclick="setDestCat(this, 'nature')">
+              🌿 Nature
+            </button>
+            <button class="dest-pill" data-cat="cultural" onclick="setDestCat(this, 'cultural')">
+              🏛 Cultural
+            </button>
+            <button class="dest-pill" data-cat="beach" onclick="setDestCat(this, 'beach')">
+              🌊 Beach
+            </button>
+            <button class="dest-pill" data-cat="wildlife" onclick="setDestCat(this, 'wildlife')">
+              🐆 Wildlife
+            </button>
+            <button class="dest-pill" data-cat="heritage" onclick="setDestCat(this, 'heritage')">
+              🏰 Heritage
+            </button>
+            <button class="dest-pill" data-cat="adventure" onclick="setDestCat(this, 'adventure')">
+              🧗 Adventure
+            </button>
+          </div>
+          <div class="dest-results-meta">
+            <span id="destResultCount">Loading destinations...</span>
+          </div>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="dest-loading" id="destLoading">
+          <i class="fa-solid fa-spinner fa-spin"></i>
+          <p>Loading destinations from database...</p>
+        </div>
+
+        <!-- Destinations Grid (DB-populated) -->
+        <div class="dest-db-grid" id="destDbGrid"></div>
+
+        <!-- No Results -->
+        <div class="dest-no-results" id="destNoResults" style="display: none">
+          <i class="fa-solid fa-map-location-dot"></i>
+          <h3>No destinations found</h3>
+          <p>Try a different category or clear your search.</p>
+          <button onclick="
+                      clearDestSearch();
+                      setDestCat(document.querySelector('.dest-pill'), 'all');
+                    ">
+            Show All
+          </button>
+        </div>
+      </section>
+
+      <!-- ── DESTINATION DETAIL MODAL ── -->
+      <div class="dest-modal-overlay" id="destDetailModal" onclick="closeDestModal(event)">
+        <div class="dest-modal-box">
+          <button class="dest-modal-close" onclick="closeDestModalBtn()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+
+          <!-- Destination Info -->
+          <div class="dest-modal-img-wrap">
+            <img id="destModalImg" src="" alt="" />
+            <span class="dest-modal-cat-tag" id="destModalCatTag"></span>
+          </div>
+          <div class="dest-modal-body">
+            <h2 id="destModalName"></h2>
+            <div class="dest-modal-meta">
+              <span><i class="fa-solid fa-location-dot"></i>
+                <span id="destModalLocation"></span></span>
+              <span><i class="fa-solid fa-tag"></i>
+                <span id="destModalCat"></span></span>
+            </div>
+            <p class="dest-modal-desc" id="destModalDesc"></p>
+
+            <!-- Button row -->
+            <div style="
+                        display: flex;
+                        gap: 10px;
+                        flex-wrap: wrap;
+                        margin-bottom: 0;
+                      ">
+              <a id="destModalMapLink" href="#" target="_blank" class="dest-modal-map-btn">
+                <i class="fa-solid fa-map-location-dot"></i> View on Google
+                Maps
+              </a>
+              <button class="dest-modal-map-btn" id="destModalFindHotelsBtn"
+                style="border: none; cursor: pointer; margin-top: 0" onclick="showDestHotelsInline()">
+                <i class="fa-solid fa-hotel"></i> Find Hotels
+              </button>
+            </div>
+
+            <!-- Hotels in this destination (hidden until Find Hotels clicked) -->
+            <div class="dest-modal-hotels-wrap" id="destModalHotelsWrap" style="display: none">
+              <div class="dest-modal-hotels-title">
+                <i class="fa-solid fa-hotel"></i>
+                Hotels in <span id="destModalHotelLocation"></span>
+              </div>
+              <div id="destModalHotelsLoading" class="dmh-loading">
+                <i class="fa-solid fa-spinner fa-spin"></i> Loading hotels...
+              </div>
+              <div id="destModalHotelsGrid" class="dmh-grid"></div>
+              <div id="destModalHotelsNone" class="dmh-none" style="display: none">
+                <i class="fa-solid fa-hotel"></i>
+                <p>No hotels listed for this destination yet.</p>
+              </div>
+            </div>
+
+            <!-- ══ REVIEWS SECTION ══ -->
+            <div class="dest-reviews-wrap">
+              <div class="dest-reviews-title">
+                <i class="fa-solid fa-star"></i>
+                Customer Reviews
+                <span id="destReviewCount" class="dest-review-count-badge">0</span>
+              </div>
+
+              <!-- Existing Reviews List -->
+              <div id="destReviewsList" class="dest-reviews-list">
+                <p style="
+                            color: #bbb;
+                            font-size: 0.85rem;
+                            text-align: center;
+                            padding: 14px 0;
+                          ">
+                  No reviews yet. Be the first to share your experience!
+                </p>
+              </div>
+
+              <!-- Add Review Form -->
+              <div class="dest-review-form-wrap">
+                <h4 class="dest-review-form-title">
+                  <i class="fa-solid fa-pen-to-square"></i> Write a Review
+                </h4>
+
+                <!-- Star rating picker -->
+                <div class="dest-star-picker" id="destStarPicker">
+                  <span class="dsp-label">Your Rating:</span>
+                  <span class="dsp-stars">
+                    <i class="fa-regular fa-star dsp-star" data-val="1"></i>
+                    <i class="fa-regular fa-star dsp-star" data-val="2"></i>
+                    <i class="fa-regular fa-star dsp-star" data-val="3"></i>
+                    <i class="fa-regular fa-star dsp-star" data-val="4"></i>
+                    <i class="fa-regular fa-star dsp-star" data-val="5"></i>
+                  </span>
+                </div>
+
+                <input type="text" id="destReviewName" class="dest-review-input" placeholder="Your name"
+                  maxlength="50" />
+                <textarea id="destReviewText" class="dest-review-textarea"
+                  placeholder="Share your experience at this destination..." rows="3" maxlength="500"></textarea>
+                <button class="dest-review-submit-btn" onclick="submitDestReview()">
+                  <i class="fa-solid fa-paper-plane"></i> Submit Review
+                </button>
+                <p id="destReviewMsg" class="dest-review-msg" style="display: none"></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div><!-- /page-destinations -->
+
+
+    <!-- ─── PAGE: TRAVEL TIPS ─── -->
+    <div id="page-traveltips" class="page">
+      <div class="page-header-banner tips-banner">
+        <h1>Travel Tips & Cultural Events</h1>
+        <p>Everything you need to know before visiting Sri Lanka</p>
+      </div>
+      <!-- EVENTS GRID -->
+      <section class="cultural-events-section" id="cultural-events-section">
+
+        <div class="cultural-events-header">
+          <h2>Cultural <span>Events</span></h2>
+          <p>Experience the vibrant festivals and traditions of Sri Lanka</p>
+        </div>
+
+        <!-- FILTER TABS -->
+        <div class="events-filter-tabs">
+          <button class="tab-btn active" onclick="setEventFilter(this,'all')">🎉 All Events</button>
+          <button class="tab-btn" onclick="setEventFilter(this,'festival')">🎊 Festivals</button>
+          <button class="tab-btn" onclick="setEventFilter(this,'religious')">🙏 Religious</button>
+          <button class="tab-btn" onclick="setEventFilter(this,'cultural')">🎭 Cultural</button>
+          <button class="tab-btn" onclick="setEventFilter(this,'sport')">🏄 Sports</button>
+        </div>
+
+        <!-- EVENTS GRID -->
+        <div class="events-grid" id="eventsGrid">
+
+
+
+        </div><!-- /events-grid -->
+
+        <!-- NO RESULTS -->
+        <div class="events-no-results" id="eventsNoResults">
+          <i class="fa-solid fa-calendar-xmark"></i>
+          <h3>No events found for this category</h3>
+        </div>
+
+        <!-- EVENT DETAIL MODAL -->
+        <div class="event-modal-overlay" id="eventModal" onclick="closeEventModal(event)">
+          <div class="event-modal">
+            <button class="event-modal-close" onclick="closeEventModalBtn()">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <span class="modal-cat-tag" id="modalEventCatTag"></span>
+            <h2 id="modalEventTitle"></h2>
+            <div class="modal-meta">
+              <div><i class="fa-solid fa-calendar"></i> <span id="modalEventDate"></span></div>
+              <div><i class="fa-solid fa-location-dot"></i> <span id="modalEventLocation"></span></div>
+              <div><i class="fa-solid fa-clock"></i> <span id="modalEventDuration"></span></div>
+            </div>
+            <p class="modal-desc" id="modalEventDesc"></p>
+            <button class="modal-ok-btn" onclick="closeEventModalBtn()">Close</button>
+          </div>
+        </div>
+
+      </section>
+      <div class="info-page-content">
+        <div class="tip-card"><i class="fa-solid fa-passport"></i>
+          <h3>Visa</h3>
+          <p>Most visitors can obtain an ETA online. Valid for 30 days, extendable up to 6 months.</p>
+        </div>
+        <div class="tip-card"><i class="fa-solid fa-sun"></i>
+          <h3>Best Time to Visit</h3>
+          <p>West & south coast: December–March. East coast: May–September.</p>
+        </div>
+        <div class="tip-card"><i class="fa-solid fa-money-bill"></i>
+          <h3>Currency</h3>
+          <p>Sri Lankan Rupee (LKR). ATMs widely available. USD/EUR accepted at tourist sites.</p>
+        </div>
+        <div class="tip-card"><i class="fa-solid fa-train"></i>
+          <h3>Getting Around</h3>
+          <p>Scenic train rides through the Hill Country are a must. Tuk-tuks for short distances.</p>
+        </div>
+        <div class="tip-card"><i class="fa-solid fa-shirt"></i>
+          <h3>Dress Code</h3>
+          <p>Cover shoulders and knees when visiting temples.</p>
+        </div>
+        <div class="tip-card"><i class="fa-solid fa-utensils"></i>
+          <h3>Food</h3>
+          <p>Try rice & curry, kottu roti, hoppers, and fresh seafood.</p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ─── PAGE: GALLERY ─── -->
+    <div id="page-gallery" class="page">
+      <div class="page-header-banner gallery-banner">
+        <h1>Gallery</h1>
+        <p>A visual journey through the Pearl of the Indian Ocean</p>
+      </div>
+
+      <!-- ── DB-driven Gallery Section ── -->
+      <section class="gallery-db-section">
+        <h2>Explore <span>Sri Lanka</span></h2>
+        <p>Photos from across the island — updated live from our collection</p>
+
+        <!-- Filter Tabs -->
+        <div class="gallery-filter-tabs">
+          <button class="gal-tab active" onclick="setGalleryFilter(this,'all')">&#128444;&#65039; All</button>
+          <button class="gal-tab" onclick="setGalleryFilter(this,'nature')">&#127807; Nature</button>
+          <button class="gal-tab" onclick="setGalleryFilter(this,'beach')">&#127754; Beach</button>
+          <button class="gal-tab" onclick="setGalleryFilter(this,'heritage')">&#127963;&#65039; Heritage</button>
+          <button class="gal-tab" onclick="setGalleryFilter(this,'wildlife')">&#128006; Wildlife</button>
+          <button class="gal-tab" onclick="setGalleryFilter(this,'food')">&#127859; Food</button>
+          <button class="gal-tab" onclick="setGalleryFilter(this,'festival')">&#127881; Festival</button>
+        </div>
+
+        <!-- Gallery Grid (populated by JS from DB) -->
+        <div id="galleryDbGrid"></div>
+
+        <!-- No Results -->
+        <div id="galleryNoResults">
+          <i class="fa-solid fa-images"></i>
+          <h3>No images found for this category</h3>
+        </div>
+      </section>
+
+      <!-- Gallery Lightbox Modal -->
+      <div id="galleryModal" onclick="closeGalleryModal(event)">
+        <div class="gal-modal-box">
+          <button class="gal-modal-close" onclick="closeGalleryModalBtn()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+          <div class="gal-modal-img-wrap">
+            <img id="galModalImg" src="" alt="">
+          </div>
+          <div class="gal-modal-body">
+            <h2 id="galModalTitle"></h2>
+            <div class="gal-modal-meta">
+              <span><i class="fa-solid fa-tag"></i><span id="galModalCat"></span></span>
+              <span><i class="fa-solid fa-location-dot"></i><span id="galModalLocation"></span></span>
+            </div>
+            <p class="gal-modal-caption" id="galModalCaption"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- TRADITIONAL FOODS - inside Gallery page -->
+      <section class="traditional-foods-section" id="traditional-foods-gallery">
+
+        <div class="foods-header">
+          <h2>Traditional <span>Foods</span></h2>
+          <p>Taste the authentic flavours of Sri Lanka</p>
+        </div>
+
+        <div class="foods-filter-tabs">
+          <button class="food-tab active" onclick="setFoodFilter(this,'all')">🍽️ All Foods</button>
+          <button class="food-tab" onclick="setFoodFilter(this,'rice')">🍛 Rice &amp; Curry</button>
+          <button class="food-tab" onclick="setFoodFilter(this,'snack')">🥘 Snacks</button>
+          <button class="food-tab" onclick="setFoodFilter(this,'sweet')">🍮 Sweets</button>
+          <button class="food-tab" onclick="setFoodFilter(this,'seafood')">🦞 Seafood</button>
+        </div>
+        <div class="foods-grid" id="foodsGrid">
+        </div>
+
+        <div class="foods-no-results" id="foodsNoResults" style="display:none;">
+          <i class="fa-solid fa-bowl-food"></i>
+          <h3>No foods found for this category</h3>
+          <button onclick="setFoodFilter(document.querySelector('.food-tab'),'all')">Show All Foods</button>
+        </div>
+
+        <!-- FOOD DETAIL MODAL -->
+        <div class="food-modal-overlay" id="foodModal" onclick="closeFoodModal(event)">
+          <div class="food-modal">
+            <button class="food-modal-close" onclick="closeFoodModalBtn()">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+            <span class="modal-food-cat-tag" id="modalFoodCatTag"></span>
+            <h2 id="modalFoodTitle"></h2>
+            <div class="modal-food-meta">
+              <div><i class="fa-solid fa-location-dot"></i> <span id="modalFoodLocation"></span></div>
+              <div><i class="fa-solid fa-fire"></i> <span id="modalFoodSpice"></span></div>
+            </div>
+            <p class="modal-food-desc" id="modalFoodDesc"></p>
+            <button class="modal-ok-btn" onclick="closeFoodModalBtn()">Close</button>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+
+
+    <!-- ─── PAGE: MAP ─── -->
+    <div id="page-map" class="page">
+      <div class="page-header-banner map-banner">
+        <h1>Explore the Map</h1>
+        <p>Find all the amazing destinations across Sri Lanka</p>
+      </div>
+      <section class="sri-lanka-info" style="margin-top:0; padding-top:40px;">
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d395879.9132757409!2d79.79989522364217!3d7.873053582235165!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3ae25e2f0b6d81b3%3A0x3a1778247194aa9e!2sSri%20Lanka!5e0!3m2!1sen!2slk!4v1698400000000!5m2!1sen!2slk"
+            width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+        <div class="sri-lanka-text">
+          <h2>Discover the Jewel of the Indian Ocean</h2>
+          <p>From the ancient ruins of Anuradhapura in the north to the pristine beaches of the south, use the
+            map to plan your perfect itinerary.</p>
+        </div>
+      </section>
+    </div>
+
+
+    <!-- ─── PAGE: OUR STORY ─── -->
+    <div id="page-ourstory" class="page">
+      <div class="page-header-banner story-banner">
+        <h1>Our Story</h1>
+        <p>The people behind Explore Sri Lanka</p>
+      </div>
+      <div class="info-page-content story-content">
+        <div class="story-text">
+          <h2>About Explore Sri Lanka</h2>
+          <p>Explore Sri Lanka was created with a passion to showcase the beauty, culture, and natural wonders
+            of Sri Lanka to travelers from around the world.</p>
+          <h2>Born from a Love of Sri Lanka</h2>
+          <p>Founded by passionate travelers and locals who wanted to share the true beauty of our island
+            paradise with the world.</p>
+        </div>
+        <div class="story-vm-section">
+          <div class="story-vm-box">
+            <h3>Our Vision</h3>
+            <p>To become the leading travel inspiration platform for Sri Lanka, encouraging sustainable
+              tourism.</p>
+          </div>
+          <div class="story-vm-box">
+            <h3>Our Mission</h3>
+            <p>To connect travelers with the real Sri Lanka — its people, culture, nature, and history.</p>
+          </div>
+        </div>
+        <section class="services">
+          <h2>Our Services</h2>
+          <div class="service-grid">
+            <div class="service">
+              <h4>Destination Guides</h4>
+              <p>Discover Sri Lanka's most beautiful places.</p>
+            </div>
+            <div class="service">
+              <h4>Travel Tips</h4>
+              <p>Helpful information about transportation and culture.</p>
+            </div>
+            <div class="service">
+              <h4>Hotel Booking</h4>
+              <p>Find comfortable hotels across Sri Lanka.</p>
+            </div>
+            <div class="service">
+              <h4>Travel Inspiration</h4>
+              <p>Stories and photos to inspire your adventure.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+
+    <!-- ─── PAGE: CONTACT ─── -->
+    <div id="page-contact" class="page">
+      <div class="page-header-banner contact-banner">
+        <h1>Contact Us</h1>
+        <p>We'd love to hear from you</p>
+      </div>
+      <div class="contact-wrapper">
+        <div class="contact-info">
+          <h3><i class="fa-solid fa-phone"></i> Phone</h3>
+          <p>+94 77 123 4567</p>
+          <h3><i class="fa-solid fa-envelope"></i> Email</h3>
+          <p>finalunip@gmail.com</p>
+          <h3><i class="fa-solid fa-location-dot"></i> Address</h3>
+          <p>123 Galle Road, Colombo 03, Sri Lanka</p>
+          <div class="social-icons" style="margin-top:20px;">
+            <a href="https://www.facebook.com/" class="social-link"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/" class="social-link"><i class="fab fa-instagram"></i></a>
+            <a href="https://x.com/" class="social-link"><i class="fab fa-twitter"></i></a>
+          </div>
+        </div>
+        <form class="contact-form" onsubmit="submitContact(event)">
+          <input type="text" id="contactName" name="name" placeholder="Your Name" required>
+          <input type="email" id="contactEmail" name="email" placeholder="Your Email" required>
+          <input type="text" id="contactSubject" name="subject" placeholder="Subject">
+          <textarea id="contactMessage" name="message" rows="5" placeholder="Your Message" required></textarea>
+          <!-- <button type="submit">Send Message</button> -->
+          <button id="contactSubmitBtn" type="submit">
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════
+       HOTEL DETAIL OVERLAY  ▶  START
+       (Fix: openHotelDetail() function eke elements enne
+        methana HTML eken — script.js:1614 crash fix)
+  ══════════════════════════════════════════════════════ -->
+  <div class="hd-overlay" id="hotelDetailOverlay" onclick="closeHotelDetail(event)">
+    <div class="hd-modal">
+
+      <!-- Close Button -->
+      <button class="hd-close-btn" onclick="closeHotelDetailBtn()">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <!-- Hotel Image -->
+      <div class="hd-img-wrap">
+        <img id="hd-img" src="" alt="" onerror="this.src='images/hero-sri-lanka.jpg'">
+        <span class="hd-badge" id="hd-badge"></span>
+      </div>
+
+      <!-- Hotel Info -->
+      <div class="hd-body">
+
+        <!-- Name & Location -->
+        <h2 class="hd-name" id="hd-name"></h2>
+        <div class="hd-location">
+          <i class="fa-solid fa-location-dot"></i>
+          <span id="hd-loc"></span>
+        </div>
+
+        <!-- Stars -->
+        <div class="hd-stars" id="hd-stars"></div>
+
+        <!-- Description -->
+        <p class="hd-desc" id="hd-desc"></p>
+
+        <!-- Highlights Row -->
+        <div class="hd-highlights">
+          <div class="hd-hl-item">
+            <i class="fa-solid fa-moon"></i>
+            <span id="hd-hl-stay">1 Night</span>
+          </div>
+          <div class="hd-hl-item">
+            <i class="fa-solid fa-users"></i>
+            <span id="hd-hl-cap">2 Guests</span>
+          </div>
+          <div class="hd-hl-item">
+            <i class="fa-solid fa-star"></i>
+            <span id="hd-hl-rating">4 / 5</span>
+          </div>
+        </div>
+
+        <!-- Amenities -->
+        <div class="hd-amenities-wrap" id="hd-amenities-wrap">
+          <h4 class="hd-amenities-title">
+            <i class="fa-solid fa-circle-check"></i> Amenities
+          </h4>
+          <div class="hd-amenities" id="hd-amenities"></div>
+        </div>
+
+        <!-- Price + Book Now Button -->
+        <div class="hd-footer">
+          <div class="hd-price-block">
+            <span class="hd-price-from">From</span>
+            <span class="hd-price" id="hd-price"></span>
+            <span class="hd-price-night">/night</span>
+          </div>
+          <button class="hd-book-btn" onclick="hdBookNow()">
+            <i class="fa-solid fa-calendar-check"></i> Book Now
+          </button>
+        </div>
+
+      </div><!-- /hd-body -->
+    </div><!-- /hd-modal -->
+  </div>
+  <!-- HOTEL DETAIL OVERLAY  ◀  END ══════════════════════ -->
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
+      <div class="footer-section">
+        <img src="images/lion.png" alt="Logo" class="logo-img">
+        <h2>Explore Sri Lanka</h2>
+        <p>DISCOVER THE PEARL OF THE INDIAN OCEAN</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#" onclick="loadPage('home')">Home</a></li>
+          <li><a href="#" onclick="loadPage('destinations')">Destinations</a></li>
+          <li><a href="#" onclick="loadPage('traveltips')">Travel Tips</a></li>
+          <li><a href="#" onclick="loadPage('gallery')">Gallery</a></li>
+          <li><a href="#" onclick="loadPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Contact Us</h3>
+        <p>Explore Sri Lanka – Discover the true beauty of our island paradise. 🌿</p>
+        <p class="contact-item">📞 Phone: +94 77 123 4567</p>
+        <p class="contact-item">📧 Email: finalunip@gmail.com</p>
+        <div class="social-icons">
+          <a href="https://www.facebook.com/" class="social-link"><i class="fab fa-facebook"></i></a>
+          <a href="https://www.instagram.com/" class="social-link"><i class="fab fa-instagram"></i></a>
+          <a href="https://x.com/" class="social-link"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+
+  <script src="firebase-init.js"></script>
+</body>
+
+</html>
