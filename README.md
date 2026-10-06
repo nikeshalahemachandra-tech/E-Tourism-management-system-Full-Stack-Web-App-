@@ -165,59 +165,6 @@ Explore-Sri-Lanka/
 *Adjust the folder names above to match your actual GitHub repository structure.*
 
 ---
-
-## 🚀 Getting Started
-
-### 1. Clone the Repository
-
-```bash
-git clone https://github.com/your-username/explore-sri-lanka.git
-```
-
-### 2. Open the Project
-
-Open the project folder using your preferred development environment.
-
-### 3. Configure the Database
-
-Create a MySQL database and import the project's SQL database file.
-
-Update the database configuration with your local credentials:
-
-```php
-$host = "localhost";
-$username = "root";
-$password = "";
-$database = "explore_sri_lanka";
-```
-
-### 4. Run the Application
-
-If using XAMPP:
-
-1. Start **Apache**
-2. Start **MySQL**
-3. Place the project inside the `htdocs` folder.
-4. Open your browser.
-5. Navigate to:
-
-```text
-http://localhost/explore-sri-lanka/
-```
-
----
-
-## 🎯 Project Objectives
-
-* Provide a centralized platform for Sri Lankan tourism information.
-* Improve the process of discovering travel destinations.
-* Provide convenient access to tour and accommodation information.
-* Simplify tourism booking workflows.
-* Provide a responsive and user-friendly experience.
-* Demonstrate practical full-stack web development skills.
-
----
-
 ## 👨‍💻 My Role
 
 **Frontend Developer / Web Application Developer**
